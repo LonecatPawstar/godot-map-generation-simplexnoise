@@ -2,7 +2,8 @@ extends Node2D
 
 onready var tileMapGrass = $TileMap
 
-var map_size: Vector2 = Vector2(80, 60)
+var map_size: Vector2 = Vector2(32, 19)
+
 var grass_cap: float = 0.5
 
 var noise: OpenSimplexNoise
@@ -35,3 +36,4 @@ func make_grass_map():
 			var a = noise.get_noise_2d(x, y)
 			if a < grass_cap:
 				tileMapGrass.set_cell(x, y, 0)
+	tileMapGrass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
