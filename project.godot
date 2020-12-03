@@ -8,15 +8,44 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node",
+"class": "AtlasTileFactory",
+"language": "GDScript",
+"path": "res://src/generator/atlas/AtlasTileFactory.gd"
+}, {
+"base": "Node",
+"class": "AtlasTileSelected",
+"language": "GDScript",
+"path": "res://src/generator/atlas/AtlasTileSelected.gd"
+}, {
+"base": "Node",
+"class": "AtlasTileSelector",
+"language": "GDScript",
+"path": "res://src/generator/atlas/AtlasTileSelector.gd"
+}, {
+"base": "Node",
+"class": "AtlasesTileSelector",
+"language": "GDScript",
+"path": "res://src/generator/atlas/AtlasesTileSelector.gd"
+}, {
+"base": "Node",
+"class": "TileGeneratorFactory",
+"language": "GDScript",
+"path": "res://src/generator/TileGeneratorFactory.gd"
+} ]
 _global_script_class_icons={
-
+"AtlasTileFactory": "",
+"AtlasTileSelected": "",
+"AtlasTileSelector": "",
+"AtlasesTileSelector": "",
+"TileGeneratorFactory": ""
 }
 
 [application]
 
 config/name="godot-map-generation-noise"
-run/main_scene="res://src/WorldGenerator.tscn"
+run/main_scene="res://src/generator/WorldGenerator.tscn"
 config/icon="res://icon.png"
 
 [display]

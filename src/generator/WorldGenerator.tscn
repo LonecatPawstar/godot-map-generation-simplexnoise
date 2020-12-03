@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/tileset/tileset.tres" type="TileSet" id=1]
-[ext_resource path="res://src/WorldGenerator.gd" type="Script" id=2]
+[ext_resource path="res://src/generator/WorldGenerator.gd" type="Script" id=2]
 
 [node name="WorldGenerator" type="Node2D"]
+position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]

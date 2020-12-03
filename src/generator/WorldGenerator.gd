@@ -53,39 +53,34 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 	var tileIdGrassSolo: int = tileSet.find_tile_by_name("grass-solo")
 	var tileIdRoad: int = tileSet.find_tile_by_name("road")
 	
-	# Tileset for TileMapItems
-	var tileSetItems: TileSet = tileMap.get_tileset()
-	var tileIdRocks: int = tileSet.find_tile_by_name("atlas-rocks")
-	#var tileIdMushrooms: int = tileSet.find_tile_by_name("atlas-mushrooms")
-	
-
-	
 	var tileTypeSelected: int = -1
 	var tileItemTypeSelected: int = -1
 	if selection < grass_cap:
 		tileTypeSelected = tileIdGrassSolo
+			
+		# Tileset for TileMapItems
+		var tileSetItems: TileSet = tileMapItems.get_tileset()
+		var tileIdRocks: int = tileSetItems.find_tile_by_name("atlas-rocks")
 		tileItemTypeSelected = tileIdRocks
-		var itemFromAtlas: Vector2 = select_item_from_atlas(tileSetItems, "atlas-rocks")
-		tileMapItems.set_cell(x, y, tileItemTypeSelected, false, false, false, itemFromAtlas)
+		
+		var atlasesTileSelector: AtlasesTileSelector = TileGeneratorFactory.Atlases(
+			[
+				TileGeneratorFactory.Atlas(tileMapItems, "atlas-rocks"),
+				TileGeneratorFactory.Atlas(tileMapItems, "atlas-mushroom")
+			]
+		)
+		var atlasTileSelected: AtlasTileSelected = atlasesTileSelector.get_random_tile_from_atlases()
+		atlasesTileSelector.free()
+		
+		tileMapItems.set_cell(
+				x, y, 
+				tileSetItems.find_tile_by_name(atlasTileSelected.atlasName), 
+				false, false, false, 
+				atlasTileSelected.tileSelected
+		)
 	
 	if selection < road_caps.x and selection > road_caps.y:
 		tileTypeSelected = tileIdRoad
 		
 	tileMap.set_cell(x, y, tileTypeSelected)
 
-# Gets a random column and row number from an atlas.
-# This can be passed to the set_cell method.
-func select_item_from_atlas(
-	tileSetContainingAtlas: TileSet,
-	atlasName: String
-) -> Vector2:
-	var tileIdAtlas: int = tileSetContainingAtlas.find_tile_by_name(atlasName)
-	# Atlas "region" coordinates in the tileset, e.g. (startx = 256, starty=0, sizex=32, sizey=32)
-	var regionAtlas: Rect2 = tileSetContainingAtlas.tile_get_region(tileIdAtlas)
-	# Dimensions x/y of one of the atlas item, e.g. x16/y16
-	var dimenstionAtlasItem: Vector2 = tileSetContainingAtlas.autotile_get_size(tileIdAtlas)
-	# Number of columns and row in the atlas region
-	var numberOfColumns: int = regionAtlas.size.x / dimenstionAtlasItem.x
-	var numberOfRows: int = regionAtlas.size.y / dimenstionAtlasItem.y
-	# Random column and row corresponding to item
-	return Vector2(randi() % numberOfColumns, randi() % numberOfRows)
