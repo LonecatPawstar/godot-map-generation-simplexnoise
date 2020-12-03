@@ -14,6 +14,7 @@ var noise: OpenSimplexNoise
 # Tiles
 var tileIdGrass: int
 var tileIdRoad: int
+var tileIdWalls: int
 var tileSelectorAtlases: AtlasesTileSelector
 
 
@@ -59,6 +60,7 @@ func _init_tile_selectors() -> void:
 	tileIdGrass = tileSet.find_tile_by_name("grass-solo")
 	# Auto tile
 	tileIdRoad = tileSet.find_tile_by_name("road")
+	tileIdWalls = tileSet.find_tile_by_name("walls")
 	
 	# Atlas
 	tileSelectorAtlases = TileSelectorFactory.AtlasesTileSelectorWithPriorityFrom(
@@ -87,7 +89,7 @@ func make_map():
 
 # Selects a tile with some rules
 func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
-	var tileTypeSelected: int = -1
+	var tileTypeSelected: int = tileMap.get_cell(x, y)
 	
 	# Grass layer
 	if selection < grass_cap:
@@ -102,6 +104,9 @@ func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
 					false, false, false, 
 					tileSelected.tileSelected
 			)
+		
+		# Add walls 1 below grass
+		tileMap.set_cell(x, y + 1, tileIdWalls)
 	
 	# Road layer
 	if selection < road_caps.x and selection > road_caps.y:
