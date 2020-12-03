@@ -2,7 +2,7 @@ extends Node
 class_name AtlasTileSelectorFactory
 
 
-static func Atlas(
+static func from(
 	tileMap: TileMap,
 	atlasName: String
 ) -> AtlasTileSelector:

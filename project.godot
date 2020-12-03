@@ -43,6 +43,11 @@ _global_script_classes=[ {
 "class": "TileSelector",
 "language": "GDScript",
 "path": "res://src/generator/tileselector/TileSelector.gd"
+}, {
+"base": "Node",
+"class": "TileSelectorFactory",
+"language": "GDScript",
+"path": "res://src/generator/tileselector/TileSelectorFactory.gd"
 } ]
 _global_script_class_icons={
 "AtlasTile": "",
@@ -51,7 +56,8 @@ _global_script_class_icons={
 "AtlasesTileSelector": "",
 "AtlasesTileSelectorFactory": "",
 "TileSelected": "",
-"TileSelector": ""
+"TileSelector": "",
+"TileSelectorFactory": ""
 }
 
 [application]
