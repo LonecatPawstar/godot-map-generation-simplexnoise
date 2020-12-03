@@ -5,9 +5,9 @@ static func AtlasTileSelected(
 	tileSelected: Vector2,
 	atlasId: int,
 	atlasName: String
-) -> AtlasTileSelected:
-	var atlasTileSelected: AtlasTileSelected = AtlasTileSelected.new()
+) -> TileSelected:
+	var atlasTileSelected: TileSelected = TileSelected.new()
 	atlasTileSelected.tileSelected = tileSelected
-	atlasTileSelected.atlasId = atlasId
-	atlasTileSelected.atlasName = atlasName
+	atlasTileSelected.tileId = atlasId
+	atlasTileSelected.tileName = atlasName
 	return atlasTileSelected

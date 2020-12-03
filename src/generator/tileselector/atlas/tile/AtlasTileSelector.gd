@@ -33,7 +33,7 @@ func _assert() -> void:
 
 # Gets a random column and row number from an atlas.
 # This can be passed to the set_cell method.
-func get_random_tile_from_atlas() -> AtlasTileSelected:
+func get_random_tile_from_atlas() -> TileSelected:
 	_assert()
 	var tileIdAtlas: int = _tileSet.find_tile_by_name(_atlasName)
 	# Atlas "region" coordinates in the tileset, e.g. (startx = 256, starty=0, sizex=32, sizey=32)

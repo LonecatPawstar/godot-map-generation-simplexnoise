@@ -26,7 +26,7 @@ func _assert() -> void:
 
 
 # Gets a random tile from an array of atlas.
-func get_random_tile_from_atlases() -> AtlasTileSelected:
+func get_random_tile_from_atlases() -> TileSelected:
 	_assert()
 	_atlasTileSelectorArray.shuffle()
 	var atlasSelector: AtlasTileSelector = _atlasTileSelectorArray.front()

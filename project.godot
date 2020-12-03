@@ -12,17 +12,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "AtlasTileFactory",
 "language": "GDScript",
-"path": "res://src/generator/atlas/AtlasTileFactory.gd"
-}, {
-"base": "Node",
-"class": "AtlasTileSelected",
-"language": "GDScript",
-"path": "res://src/generator/atlas/AtlasTileSelected.gd"
+"path": "res://src/generator/tileselector/atlas/AtlasTileFactory.gd"
 }, {
 "base": "Node",
 "class": "AtlasTileSelector",
 "language": "GDScript",
-"path": "res://src/generator/atlas/AtlasTileSelector.gd"
+"path": "res://src/generator/tileselector/atlas/tile/AtlasTileSelector.gd"
 }, {
 "base": "Node",
 "class": "AtlasTileSelectorFactory",
@@ -32,14 +27,19 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "AtlasesTileSelector",
 "language": "GDScript",
-"path": "res://src/generator/atlas/AtlasesTileSelector.gd"
+"path": "res://src/generator/tileselector/atlas/AtlasesTileSelector.gd"
+}, {
+"base": "Node",
+"class": "TileSelected",
+"language": "GDScript",
+"path": "res://src/generator/tileselector/TileSelected.gd"
 } ]
 _global_script_class_icons={
 "AtlasTileFactory": "",
-"AtlasTileSelected": "",
 "AtlasTileSelector": "",
 "AtlasTileSelectorFactory": "",
-"AtlasesTileSelector": ""
+"AtlasesTileSelector": "",
+"TileSelected": ""
 }
 
 [application]

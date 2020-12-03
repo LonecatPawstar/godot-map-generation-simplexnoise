@@ -70,12 +70,12 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 				AtlasTileSelectorFactory.Atlas(tileMapItems, "atlas-mushroom")
 			]
 		)
-		var atlasTileSelected: AtlasTileSelected = atlasesTileSelector.get_random_tile_from_atlases()
+		var atlasTileSelected: TileSelected = atlasesTileSelector.get_random_tile_from_atlases()
 		atlasesTileSelector.free()
 		
 		tileMapItems.set_cell(
 				x, y, 
-				atlasTileSelected.atlasId, 
+				atlasTileSelected.tileId, 
 				false, false, false, 
 				atlasTileSelected.tileSelected
 		)
