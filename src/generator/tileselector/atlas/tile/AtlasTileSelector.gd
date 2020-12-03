@@ -47,8 +47,37 @@ func get_random_tile_from_atlas() -> TileSelected:
 	return AtlasTile.from(
 		tileIdAtlas,
 		_atlasName,
-		Vector2(
-			randi() % numberOfColumns, 
-			randi() % numberOfRows
+		_get_subtile_with_priority(
+			numberOfColumns,
+			numberOfRows,
+			tileIdAtlas
 		)
 	)
+
+
+# Gets a subtile from the autotile or atlas, using priority
+func _get_subtile_with_priority(
+	numberOfColumns: int,
+	numberOfRows: int,
+	tileIdAtlas: int
+) -> Vector2:
+	var totalPriority = 0
+	var arrayPositionPrio: Array
+	# Iterate over all tiles positions and record them, using Vector2
+	for c in range(0, numberOfColumns):
+		for r in range(0, numberOfRows):
+			var priority: int = _tileSet.autotile_get_subtile_priority(
+				tileIdAtlas, 
+				Vector2(c, r)
+			)
+			totalPriority += priority
+			arrayPositionPrio.append(Vector3(c, r, priority)) # Store prio on Z
+	# Select one tile based on priority
+	var selectedPriorityId = randi() % totalPriority + 1
+	totalPriority = 0
+	for i in range(0, arrayPositionPrio.size()):
+		var posAndPrio: Vector3 = arrayPositionPrio[i]
+		totalPriority += posAndPrio.z
+		if (totalPriority >= selectedPriorityId):
+			return Vector2(posAndPrio.x, posAndPrio.y)
+	return Vector2(0, 0)
