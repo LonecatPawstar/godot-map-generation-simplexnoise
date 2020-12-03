@@ -32,13 +32,13 @@ func _process(delta: float) -> void:
 
 func initialize() -> void:
 	tileMap.clear()
+	tileMapItems.clear()
 	
 	_init_noise()
 	_init_tile_selectors()
 	
 	make_map()
-	#make_grass_map()
-	#make_road_map()
+
 	tileMap.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	tileMapItems.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	
@@ -64,9 +64,9 @@ func _init_tile_selectors() -> void:
 	tileSelectorAtlases = TileSelectorFactory.AtlasesTileSelectorWithPriorityFrom(
 			tileMapItems,
 			[
-				["atlas-rocks", 	5], 
+				["atlas-rocks", 	2], 
 				["atlas-mushroom", 	4], 
-				["tree", 			1],
+				["tree", 			4],
 			]
 		)
 
@@ -93,14 +93,15 @@ func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
 	if selection < grass_cap:
 		tileTypeSelected = tileIdGrass
 		
-		var tileSelected: TileSelected = tileSelectorAtlases.get_random_tile()
 		# Add items on grass
-		tileMapItems.set_cell(
-				x, y, 
-				tileSelected.tileId, 
-				false, false, false, 
-				tileSelected.tileSelected
-		)
+		if (randi() % 100 <= 2):
+			var tileSelected: TileSelected = tileSelectorAtlases.get_random_tile()
+			tileMapItems.set_cell(
+					x, y, 
+					tileSelected.tileId, 
+					false, false, false, 
+					tileSelected.tileSelected
+			)
 	
 	# Road layer
 	if selection < road_caps.x and selection > road_caps.y:
