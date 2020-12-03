@@ -44,8 +44,8 @@ func get_random_tile_from_atlas() -> TileSelected:
 	var numberOfColumns: int = regionAtlas.size.x / dimenstionAtlasItem.x
 	var numberOfRows: int = regionAtlas.size.y / dimenstionAtlasItem.y
 	# Random tile selected corresponding to item
-	return AtlasTileFactory.AtlasTileSelected(
-		Vector2(randi() % numberOfColumns, randi() % numberOfRows),
+	return AtlasTile.from(
 		tileIdAtlas,
-		_atlasName
+		_atlasName,
+		Vector2(randi() % numberOfColumns, randi() % numberOfRows)
 	)

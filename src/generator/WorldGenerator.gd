@@ -64,20 +64,20 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 		tileItemTypeSelected = tileIdRocks
 		
 		# Select random tile from array of atlases
-		var atlasesTileSelector: AtlasesTileSelector = AtlasTileSelectorFactory.Atlases(
+		var atlasesTileSelector: AtlasesTileSelector = AtlasesTileSelectorFactory.Atlases(
 			[
 				AtlasTileSelectorFactory.Atlas(tileMapItems, "atlas-rocks"),
 				AtlasTileSelectorFactory.Atlas(tileMapItems, "atlas-mushroom")
 			]
 		)
-		var atlasTileSelected: TileSelected = atlasesTileSelector.get_random_tile_from_atlases()
+		var tileSelected: TileSelected = atlasesTileSelector.get_random_tile()
 		atlasesTileSelector.free()
 		
 		tileMapItems.set_cell(
 				x, y, 
-				atlasTileSelected.tileId, 
+				tileSelected.tileId, 
 				false, false, false, 
-				atlasTileSelected.tileSelected
+				tileSelected.tileSelected
 		)
 	
 	if selection < road_caps.x and selection > road_caps.y:

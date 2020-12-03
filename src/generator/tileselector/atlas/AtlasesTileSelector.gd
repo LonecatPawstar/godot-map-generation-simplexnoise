@@ -1,7 +1,7 @@
-######################
-# ATLAS TILE SELECTOR
-######################
-extends Node
+########################
+# ATLASES TILE SELECTOR
+########################
+extends TileSelector
 class_name AtlasesTileSelector
 
 
@@ -26,7 +26,7 @@ func _assert() -> void:
 
 
 # Gets a random tile from an array of atlas.
-func get_random_tile_from_atlases() -> TileSelected:
+func get_random_tile() -> TileSelected:
 	_assert()
 	_atlasTileSelectorArray.shuffle()
 	var atlasSelector: AtlasTileSelector = _atlasTileSelectorArray.front()
