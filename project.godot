@@ -25,21 +25,21 @@ _global_script_classes=[ {
 "path": "res://src/generator/atlas/AtlasTileSelector.gd"
 }, {
 "base": "Node",
+"class": "AtlasTileSelectorFactory",
+"language": "GDScript",
+"path": "res://src/generator/AtlasTileSelectorFactory.gd"
+}, {
+"base": "Node",
 "class": "AtlasesTileSelector",
 "language": "GDScript",
 "path": "res://src/generator/atlas/AtlasesTileSelector.gd"
-}, {
-"base": "Node",
-"class": "TileGeneratorFactory",
-"language": "GDScript",
-"path": "res://src/generator/TileGeneratorFactory.gd"
 } ]
 _global_script_class_icons={
 "AtlasTileFactory": "",
 "AtlasTileSelected": "",
 "AtlasTileSelector": "",
-"AtlasesTileSelector": "",
-"TileGeneratorFactory": ""
+"AtlasTileSelectorFactory": "",
+"AtlasesTileSelector": ""
 }
 
 [application]

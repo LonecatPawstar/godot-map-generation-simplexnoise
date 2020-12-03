@@ -1,5 +1,5 @@
 extends Node
-class_name TileGeneratorFactory
+class_name AtlasTileSelectorFactory
 
 
 static func Atlas(
@@ -17,3 +17,4 @@ static func Atlases(
 	var atlasesTileSelector: AtlasesTileSelector = AtlasesTileSelector.new()
 	atlasesTileSelector.initialize(arrayAtlases)
 	return atlasesTileSelector
+
