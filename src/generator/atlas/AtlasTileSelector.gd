@@ -46,5 +46,6 @@ func get_random_tile_from_atlas() -> AtlasTileSelected:
 	# Random tile selected corresponding to item
 	return AtlasTileFactory.AtlasTileSelected(
 		Vector2(randi() % numberOfColumns, randi() % numberOfRows),
+		tileIdAtlas,
 		_atlasName
 	)

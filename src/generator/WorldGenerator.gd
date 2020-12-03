@@ -63,6 +63,7 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 		var tileIdRocks: int = tileSetItems.find_tile_by_name("atlas-rocks")
 		tileItemTypeSelected = tileIdRocks
 		
+		# Select random tile from array of atlases
 		var atlasesTileSelector: AtlasesTileSelector = TileGeneratorFactory.Atlases(
 			[
 				TileGeneratorFactory.Atlas(tileMapItems, "atlas-rocks"),
@@ -74,7 +75,7 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 		
 		tileMapItems.set_cell(
 				x, y, 
-				tileSetItems.find_tile_by_name(atlasTileSelected.atlasName), 
+				atlasTileSelected.atlasId, 
 				false, false, false, 
 				atlasTileSelected.tileSelected
 		)
