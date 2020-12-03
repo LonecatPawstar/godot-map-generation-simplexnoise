@@ -62,9 +62,9 @@ func select_tile_for_tilemap(x: int, y: int, selection: float) -> void:
 		var atlasesTileSelector: AtlasesTileSelector = TileSelectorFactory.AtlasesTileSelectorWithPriorityFrom(
 				tileMapItems,
 				[
-					["atlas-rocks", 5], 
-					["atlas-mushroom", 4], 
-					["tree", 1]
+					["atlas-rocks", 	5], 
+					["atlas-mushroom", 	4], 
+					["tree", 			1]
 				]
 			)
 		var tileSelected: TileSelected = atlasesTileSelector.get_random_tile()

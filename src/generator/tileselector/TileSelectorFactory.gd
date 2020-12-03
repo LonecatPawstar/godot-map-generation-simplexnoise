@@ -25,20 +25,23 @@ static func AtlasesTileSelectorFrom(
 # Select tiles in atlases, selecting atlases according to priority defined here 
 static func AtlasesTileSelectorWithPriorityFrom(
 	tileMap: TileMap, # TileMap containing the atlases
-	atlasNamesAndPriority: Array # Array of Atlas, priority array (string/int), e.g. [["name1", 1], ["name2", 3]]
+	atlasNamesAndPriorities: Array # Array of Atlas, priority array (string/int), e.g. [["name1", 1], ["name2", 3]]
 ) -> AtlasesTileSelector:
-	var arrayAltasTileSelector: Array
-	var arrayAtlasesPriorities: Array
-	for i in range(0, atlasNamesAndPriority.size()):
-		var atlasNameAndPriority: Array = atlasNamesAndPriority[i]
-		arrayAltasTileSelector.append(
+	var arrayAltasTileSelectorsPriorities: Array
+	var arrayAtlasSelectorPriority
+	for i in range(0, atlasNamesAndPriorities.size()):
+		arrayAtlasSelectorPriority = []
+		var atlasNameAndPriority: Array = atlasNamesAndPriorities[i]
+		arrayAtlasSelectorPriority.append(
 			AtlasTileSelectorFactory.from(tileMap, atlasNameAndPriority[0])
 		)
-		arrayAtlasesPriorities.append(
+		arrayAtlasSelectorPriority.append(
 			atlasNameAndPriority[1]
 		)
+		arrayAltasTileSelectorsPriorities.append(
+			arrayAtlasSelectorPriority
+		)
 	return AtlasesTileSelectorFactory.from(
-		arrayAltasTileSelector,
-		arrayAtlasesPriorities
+		arrayAltasTileSelectorsPriorities
 	)
 
