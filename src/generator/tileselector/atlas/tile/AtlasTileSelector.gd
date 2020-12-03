@@ -26,7 +26,7 @@ func _assert() -> void:
 		"Function initialize() must be called"
 	)
 	assert(
-		_tileSet.find_tile_by_name(_atlasName) > 0,
+		_tileSet.find_tile_by_name(_atlasName) >= 0,
 		"Invalid atlas name " + _atlasName
 	)
 
@@ -39,13 +39,16 @@ func get_random_tile_from_atlas() -> TileSelected:
 	# Atlas "region" coordinates in the tileset, e.g. (startx = 256, starty=0, sizex=32, sizey=32)
 	var regionAtlas: Rect2 = _tileSet.tile_get_region(tileIdAtlas)
 	# Dimensions x/y of one of the atlas item, e.g. x16/y16
-	var dimenstionAtlasItem: Vector2 = _tileSet.autotile_get_size(tileIdAtlas)
+	var dimensionAtlasItem: Vector2 = _tileSet.autotile_get_size(tileIdAtlas)
 	# Number of columns and row in the atlas region
-	var numberOfColumns: int = regionAtlas.size.x / dimenstionAtlasItem.x
-	var numberOfRows: int = regionAtlas.size.y / dimenstionAtlasItem.y
+	var numberOfColumns: int = max(regionAtlas.size.x / dimensionAtlasItem.x, 1) # Minimum of 1
+	var numberOfRows: int = max(regionAtlas.size.y / dimensionAtlasItem.y, 1) # Minimum of 1
 	# Random tile selected corresponding to item
 	return AtlasTile.from(
 		tileIdAtlas,
 		_atlasName,
-		Vector2(randi() % numberOfColumns, randi() % numberOfRows)
+		Vector2(
+			randi() % numberOfColumns, 
+			randi() % numberOfRows
+		)
 	)
