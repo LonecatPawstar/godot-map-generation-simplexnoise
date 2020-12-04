@@ -31,6 +31,9 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		initialize()
 	
+	if Input.is_action_pressed("ui_right"):
+		initialize()
+	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
 
@@ -97,37 +100,86 @@ func make_map():
 		for y in map_size.y:
 			var noiseValue: float = noise.get_noise_2d(x, y)
 			select_tile_for_tilemaps(x, y, noiseValue)
+	
+	for x in map_size.x:
+		for y in map_size.y:
+			var noiseValue: float = noise.get_noise_2d(x, y)
+			add_items_layer(x, y, noiseValue)
 
 
 # Selects a tile with some rules
-func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
+func select_tile_for_tilemaps(
+	x: int, 
+	y: int, 
+	selection: float
+) -> void:
 	var tileTypeSelected: int = tileMapGrass.get_cell(x, y)
 	
 	# Grass layer
 	if selection < grass_cap:
 		tileTypeSelected = tileIdGrass
-		
-		# Add items on grass
-		if (randi() % 100 <= 2):
-			var tileSelected: TileSelected = tileSelectorAtlases.get_random_tile()
-			tileMapItems.set_cell(
-					x, y, 
-					tileSelected.tileId, 
-					false, false, false, 
-					tileSelected.tileSelected
-			)
-		
 		# Add walls 1 below grass
 		tileMapGrass.set_cell(x, y + 1, tileIdWalls)
 	
 	# Road layer
 	if selection < road_caps.x and selection > road_caps.y:
 		tileMapRoad.set_cell(x, y, tileIdRoad)
-		# Erase items on roads
-		tileMapItems.set_cell(
-				x, y, 
-				-1
-		)
 		
 	tileMapGrass.set_cell(x, y, tileTypeSelected)
+
+
+func add_items_layer(
+	x: int, 
+	y: int, 
+	selection: float
+) -> void:
+	# Grass layer
+	if selection < grass_cap:
+		# Add items on grass
+		if (randi() % 100 <= 5):
+			var tileSelected: TileSelected = tileSelectorAtlases.get_random_tile()
+			if (!is_drawing_over_forbidden_tile(
+					x,
+					y,
+					tileSelected
+				)):
+				tileMapItems.set_cell(
+						x, y, 
+						tileSelected.tileId, 
+						false, false, false, 
+						tileSelected.tileSelected
+				)
+
+
+func is_drawing_over_forbidden_tile(
+	x: int,
+	y: int,
+	tileSelected: TileSelected
+) -> bool:
+
+	var tileSet: TileSet = tileMapItems.get_tileset()
+	# Get region size of tile selected
+	var tileRegion: Rect2 = tileSet.tile_get_region(tileSelected.tileId)
+	# Get tilemap cell size
+	var tileMapCellSize: Vector2 = tileMapItems.get_cell_size()
+	# Divide the region size of the tile (x, y) by the tilemap cell size (x, y)
+	var numberOfCells: Vector2 = Vector2(
+		tileRegion.size.x / tileMapCellSize.x,
+		tileRegion.size.y / tileMapCellSize.y
+	)
+	
+	# Return tiles covering a road
+	var foriddenTileFound: bool = false
+	for a in range(0, numberOfCells.x):
+		for b in range(0, numberOfCells.y):
+			var tileRoad: int = tileMapRoad.get_cell(x + a, y + b)
+			if (tileRoad != TileMap.INVALID_CELL):
+				foriddenTileFound = true
+			
+			var tileGrass: int = tileMapGrass.get_cell(x + a, y + b)
+			if (tileGrass == TileMap.INVALID_CELL
+					or tileGrass == tileIdWalls):
+				foriddenTileFound = true
+	
+	return foriddenTileFound
 
