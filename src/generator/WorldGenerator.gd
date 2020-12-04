@@ -136,7 +136,7 @@ func add_items_layer(
 	# Grass layer
 	if selection < grass_cap:
 		# Add items on grass
-		if (randi() % 100 <= 5):
+		if (randi() % 100 <= 8):
 			var tileSelected: TileSelected = tileSelectorAtlases.get_random_tile()
 			if (!is_drawing_over_forbidden_tile(
 					x,
@@ -156,18 +156,7 @@ func is_drawing_over_forbidden_tile(
 	y: int,
 	tileSelected: TileSelected
 ) -> bool:
-
-	var tileSet: TileSet = tileMapItems.get_tileset()
-	# Get region size of tile selected
-	var tileRegion: Rect2 = tileSet.tile_get_region(tileSelected.tileId)
-	# Get tilemap cell size
-	var tileMapCellSize: Vector2 = tileMapItems.get_cell_size()
-	# Divide the region size of the tile (x, y) by the tilemap cell size (x, y)
-	var numberOfCells: Vector2 = Vector2(
-		tileRegion.size.x / tileMapCellSize.x,
-		tileRegion.size.y / tileMapCellSize.y
-	)
-	
+	var numberOfCells: Vector2 = get_number_of_cells(tileSelected)
 	# Return tiles covering a road
 	var foriddenTileFound: bool = false
 	for a in range(0, numberOfCells.x):
@@ -183,3 +172,24 @@ func is_drawing_over_forbidden_tile(
 	
 	return foriddenTileFound
 
+# The number of cells is 1, 1 for autotiles (since only 1 cell is drawn at a time)
+# and only different for large single tiles
+func get_number_of_cells(
+		tileSelected: TileSelected
+) -> Vector2:
+	var tileSet: TileSet = tileMapItems.get_tileset()
+	# Get region size of tile selected
+	var tileRegion: Rect2 = tileSet.tile_get_region(tileSelected.tileId)
+	# Get tilemap cell size
+	var tileMapCellSize: Vector2 = tileMapItems.get_cell_size()
+	
+	var tileMode = tileSet.tile_get_tile_mode(tileSelected.tileId)
+	# Divide the region size of the tile (x, y) by the tilemap cell size (x, y)
+	if (tileMode != TileSet.SINGLE_TILE):
+		return Vector2(1, 1)
+	else:
+		var numberOfCells: Vector2 = Vector2(
+			tileRegion.size.x / tileMapCellSize.x,
+			tileRegion.size.y / tileMapCellSize.y
+		)
+		return numberOfCells
