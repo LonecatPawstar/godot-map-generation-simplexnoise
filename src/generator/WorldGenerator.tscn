@@ -7,7 +7,12 @@
 position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMapGrass" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="TileMapRoad" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
@@ -16,3 +21,15 @@ format = 1
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
+
+[node name="LabelInfo" type="Label" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 158.0
+margin_bottom = 36.0
+text = "Iteration: 
+"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

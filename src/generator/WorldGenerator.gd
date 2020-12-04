@@ -1,6 +1,10 @@
 extends Node2D
 
-onready var tileMap: TileMap = $TileMap
+onready var labelInfo: Label = $LabelInfo
+var iteration: int = 0
+
+onready var tileMapGrass: TileMap = $TileMapGrass
+onready var tileMapRoad: TileMap = $TileMapRoad
 onready var tileMapItems: TileMap = $TileMapItems
 
 const map_size: Vector2 = Vector2(32, 19)
@@ -32,19 +36,26 @@ func _process(delta: float) -> void:
 
 
 func initialize() -> void:
-	tileMap.clear()
+	tileMapGrass.clear()
+	tileMapRoad.clear()
 	tileMapItems.clear()
 	
+	_init_label()
 	_init_noise()
 	_init_tile_selectors()
 	
 	make_map()
-
-	tileMap.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
+	
+	tileMapGrass.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
+	tileMapRoad.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	tileMapItems.update_bitmask_region(Vector2(0, 0), Vector2(map_size.x, map_size.y))
 	
 	_free_all()
 
+
+func _init_label() -> void:
+	iteration += 1
+	labelInfo.text = "Iteration: " + str(iteration)
 
 func _init_noise() -> void:
 	noise = OpenSimplexNoise.new()
@@ -55,9 +66,10 @@ func _init_noise() -> void:
 
 func _init_tile_selectors() -> void:
 	
-	var tileSet: TileSet = tileMap.get_tileset()
+	var tileSet: TileSet = tileMapGrass.get_tileset()
 	# Simple tile
-	tileIdGrass = tileSet.find_tile_by_name("grass-solo")
+	#tileIdGrass = tileSet.find_tile_by_name("grass-solo")
+	tileIdGrass = tileSet.find_tile_by_name("grass")
 	# Auto tile
 	tileIdRoad = tileSet.find_tile_by_name("road")
 	tileIdWalls = tileSet.find_tile_by_name("walls")
@@ -89,7 +101,7 @@ func make_map():
 
 # Selects a tile with some rules
 func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
-	var tileTypeSelected: int = tileMap.get_cell(x, y)
+	var tileTypeSelected: int = tileMapGrass.get_cell(x, y)
 	
 	# Grass layer
 	if selection < grass_cap:
@@ -106,16 +118,16 @@ func select_tile_for_tilemaps(x: int, y: int, selection: float) -> void:
 			)
 		
 		# Add walls 1 below grass
-		tileMap.set_cell(x, y + 1, tileIdWalls)
+		tileMapGrass.set_cell(x, y + 1, tileIdWalls)
 	
 	# Road layer
 	if selection < road_caps.x and selection > road_caps.y:
-		tileTypeSelected = tileIdRoad
+		tileMapRoad.set_cell(x, y, tileIdRoad)
 		# Erase items on roads
 		tileMapItems.set_cell(
 				x, y, 
 				-1
 		)
 		
-	tileMap.set_cell(x, y, tileTypeSelected)
+	tileMapGrass.set_cell(x, y, tileTypeSelected)
 
