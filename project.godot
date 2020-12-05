@@ -64,7 +64,7 @@ _global_script_class_icons={
 
 config/name="godot-map-generation-noise"
 run/main_scene="res://src/generator/WorldGenerator.tscn"
-config/icon="res://icon.png"
+config/icon="res://Icon.png"
 
 [display]
 
